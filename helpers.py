@@ -4,7 +4,7 @@
 # for a case.
 #######################################################################################################################
 
-# Namespace used for parsing the files.
+# Namespace used for parsing the XML files.
 ns = {'default' : 'http://www.loc.gov/METS/', 'xlink' : 'http://www.w3.org/1999/xlink',
       'casebody' : 'http://nrs.harvard.edu/urn-3:HLS.Libr.US_Case_Law.Schema.Case_Body:v1',
       'case' : 'http://nrs.harvard.edu/urn-3:HLS.Libr.US_Case_Law.Schema.Case:v1'}

@@ -3,7 +3,7 @@ import time
 import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 import xml.etree.ElementTree as ET
-from test_real import body, text_iter, year
+from helpers import body, text_iter, year
 from sklearn.decomposition import NMF
 import bottleneck as bn
 import csv
