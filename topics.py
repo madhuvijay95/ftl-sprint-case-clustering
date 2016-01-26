@@ -104,8 +104,6 @@ for c, sz in enumerate(cluster_sizes):
     print '%d: %d' % (c, sz)
 print
 
-#print 'NUMBER OF ITERATIONS:', NMF_fit.n_iter_
-
 results = zip(test_clusters, test_data)
 results.sort(key = lambda (c, (f,y,t)) : 2000 * c + y) # sort by cluster, then by year
 if cluster_output_filename is None:
