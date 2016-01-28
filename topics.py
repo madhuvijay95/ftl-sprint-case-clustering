@@ -15,15 +15,12 @@
 # word in each case, while ignoring words that appear in more than 50% of the data set. The inputs are described above.
 # Given a set of n cases that use a vocabulary of K words and have to be placed into c clusters, the output consists of:
 # (a) a single unique cluster assignment for each case (which is written into file #4 from above), from 0 to c-1;
-
-# (b)
-
-# (b) an (n x c) matrix W (written into file #5 from above), in which the element at row i and column j represents how
+# (b) a list of the 50 "best" words matching each cluster (written into file #5 from above)
+# (c) a list of the 20 "best" cases matching each cluster (written into file #6 from above)
+# (d) an (n x c) matrix W (written into file #7 from above), in which the element at row i and column j represents how
 #     well case i fits into cluster j;
-# (c) a (c x K) matrix H (written into file #6 from above), in which the element at row i and column j represents how
+# (e) a (c x K) matrix H (written into file #8 from above), in which the element at row i and column j represents how
 #     well word j fits into cluster i (note that the 1st row of the output file contains a list of the words in order);
-# (d) general output (written to standard output) detailing the 50 "best" words for each cluster as well as the size of
-#      cluster in the test data.
 #
 # Backend explanation of algorithm:
 # As stated above, the vocabulary for the algorithm consists of all words that did not
