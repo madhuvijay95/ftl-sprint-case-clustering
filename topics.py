@@ -23,10 +23,9 @@
 #     well word j fits into cluster i (note that the 1st row of the output file contains a list of the words in order);
 #
 # Backend explanation of algorithm:
-# As stated above, the vocabulary for the algorithm consists of all words that did not
-# appear in more than 50% of all of the cases. The data set can then be represented using an (n x K) matrix, where n is
-# the number of cases, K is the vocabulary size, and the entry at row i and column j equals the number of times that
-# word j shows up in case i.
+# As stated above, the vocabulary for the algorithm consists of all words that did not appear in more than 50% of all
+# of the cases. The data set can then be represented using an (n x K) matrix, where n is the number of cases, K is the
+# vocabulary size, and the entry at row i and column j equals the number of times that word j shows up in case i.
 # However, a problem with that setup is that words that are very common and cases that are very long would have a
 # disproportionately large impact on the results. To avoid this a TF-IDF (term frequency - inverse document frequency)
 # transformation is used to transform the matrix into one in which very common words are weighted lower and rows are
