@@ -4,21 +4,26 @@
 # (2) name of input file containing a list of cases to train the clustering algorithm on
 # (3) name of input file containing a list of cases to apply the clustering algorithm (trained on the cases from #2) to
 # (4) name of output file (csv) to write cluster assignments to, each in the form (filename, year, cluster number)
-# (5) name of output file (csv) to write the W matrix (explained below) to; this can help find "best-match" cases later
-# (6) name of output file (csv) to write the H matrix (explained below) to; this can help analyze each cluster later
-# Note that arguments 3 through 6 are each optional. However, in practice, 3-5 are necessary, though #6 can likely be
-# omitted unless you want to analyze the strength of each word in each cluster in depth later on.
+# (5) name of output file to which to write lists of best words for each cluster
+# (6) name of output file to which to write lists of best-match cases for each cluster
+# (7) name of output file (csv) to write the W matrix (explained below) to; this can help find "best-match" cases later
+# (8) name of output file (csv) to write the H matrix (explained below) to; this can help analyze each cluster later
+# Note that arguments 3 through 8 are each optional. However, in practice, 3-6 are necessary, though #7-8 can likely be
+# omitted unless you want to analyze the NMF output more in greater depth.
 #
 # Rough explanation: This file uses a non-negative matrix factorization (NMF) algorithm using the prevalence of each
 # word in each case, while ignoring words that appear in more than 50% of the data set. The inputs are described above.
 # Given a set of n cases that use a vocabulary of K words and have to be placed into c clusters, the output consists of:
 # (a) a single unique cluster assignment for each case (which is written into file #4 from above), from 0 to c-1;
+
+# (b)
+
 # (b) an (n x c) matrix W (written into file #5 from above), in which the element at row i and column j represents how
 #     well case i fits into cluster j;
 # (c) a (c x K) matrix H (written into file #6 from above), in which the element at row i and column j represents how
 #     well word j fits into cluster i (note that the 1st row of the output file contains a list of the words in order);
 # (d) general output (written to standard output) detailing the 50 "best" words for each cluster as well as the size of
-#     each cluster in the test data.
+#      cluster in the test data.
 #
 # Backend explanation of algorithm:
 # As stated above, the vocabulary for the algorithm consists of all words that did not
@@ -59,8 +64,10 @@ n_clusters = int(sys.argv[1])
 train_filename = sys.argv[2]
 test_filename = sys.argv[3] if len(sys.argv) > 3 else train_filename
 cluster_output_filename = sys.argv[4] if len(sys.argv) > 4 else None
-W_output_filename = sys.argv[5] if len(sys.argv) > 5 else None
-H_output_filename = sys.argv[6] if len(sys.argv) > 6 else None
+best_words_filename = sys.argv[5] if len(sys.argv) > 5 else None
+best_match_cases_filename = sys.argv[6] if len(sys.argv) > 6 else None
+W_output_filename = sys.argv[7] if len(sys.argv) > 7 else None
+H_output_filename = sys.argv[8] if len(sys.argv) > 8 else None
 
 with open(train_filename, 'rb') as input_file:
     train_case_list = list(input_file)
@@ -110,10 +117,14 @@ best_words = [[vocab_rev[i] for i in lst] for lst in best_indices]
 #print 'Time after NMF fit: %.3f\n' % (time.time() - start_time)
 #sys.stdout.flush()
 
-print 'BEST WORDS FOR EACH CLUSTER:'
-for c, lst in enumerate(best_words):
-    print '%d' % c, lst
-print
+#print 'BEST WORDS FOR EACH CLUSTER:'
+#for c, lst in enumerate(best_words):
+#    print '%d' % c, lst
+#print
+if best_words_filename is not None:
+    with open(best_words_filename, 'wb') as best_words_file:
+        for c, lst in enumerate(best_words):
+            best_words_file.write(int(c) + ' [' + ', '.join(map(lambda s : '\'' + s + '\'', lst)) + ']\n')
 
 #print '\nTime after NMF output: %.3f' % (time.time() - start_time)
 #sys.stdout.flush()
@@ -135,19 +146,15 @@ test_clusters = map(np.argmax, test_W)
 
 #print 'Time after NMF test transform: %.3f\n' % (time.time() - start_time)
 
-print 'NUMBER OF CASES PER CLUSTER:'
-cluster_sizes = [np.sum(np.array(test_clusters) == c) for c in range(n_clusters)]
-for c, sz in enumerate(cluster_sizes):
-    print '%d: %d' % (c, sz)
-print
+#print 'NUMBER OF CASES PER CLUSTER:'
+#cluster_sizes = [np.sum(np.array(test_clusters) == c) for c in range(n_clusters)]
+#for c, sz in enumerate(cluster_sizes):
+#    print '%d: %d' % (c, sz)
+#print
 
 results = zip(test_clusters, test_data)
 results.sort(key = lambda (c, (f,y,t)) : 2000 * c + y) # sort by cluster, then by year
-if cluster_output_filename is None:
-    print 'CLUSTER ASSIGNMENT FOR EACH CASE:'
-    for c, (f,y,t) in results:
-        print '%90s' % f, y, c
-else:
+if cluster_output_filename is not None:
     with open(cluster_output_filename, 'wb') as output_file:
         writer = csv.writer(output_file)
         for c, (f,y,t) in results:
@@ -167,3 +174,15 @@ if H_output_filename is not None:
             writer.writerow(tuple(row))
 
 #print '\nTime after all remaining output: %.3f\n' % (time.time() - start_time)
+
+cluster_weights = zip(test_case_list, test_W)
+n_cases = 20
+if best_match_cases_filename is not None:
+    with open(best_match_cases_filename, 'wb') as best_matches_file:
+        for cluster_id in range(n_clusters):
+            best_matches_file.write('FOR CLUSTER %d:\n' % cluster_id)
+            cluster_weights.sort(key = lambda (case, weights) : -weights[cluster_id])
+            clusters_ranked = map(lambda (c,w) : c, cluster_weights[0:n_cases])
+            for case in clusters_ranked:
+                best_matches_file.write(case + '\n')
+            best_matches_file.write('\n')

@@ -42,7 +42,7 @@ with open(sys.argv[1], 'rb') as input_file:
     #case_list = list(input_file)
     #case_list = map(lambda s : s.replace('\n','').replace('\r',''), case_list)
     #case_list = map(remove_quotes, case_list)
-print 'Time after reading and checking for dissents: %.3f' % (time.time() - start_time)
+#print 'Time after reading and checking for dissents: %.3f' % (time.time() - start_time)
 
 if len(sys.argv) > 2:
     with open(sys.argv[2], 'wb') as output_file:
@@ -53,4 +53,5 @@ else:
     for case in dissent_cases:
         print tuple(case)
 #check_dissents2(case_list)
-print 'Time at end: %.3f' % (time.time() - start_time)
+#print 'Time at end: %.3f' % (time.time() - start_time)
+#print 'Time at end: %.3f' % (time.time() - start_time)
