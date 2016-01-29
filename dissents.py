@@ -31,7 +31,6 @@ def check_dissents2(case_file_list):
         print case
 
 start_time = time.time()
-print 'Time at start: %.3f' % (time.time() - start_time)
 with open(sys.argv[1], 'rb') as input_file:
     reader = csv.reader(input_file)
     dissent_cases = [row for row in reader if has_dissent2(remove_quotes(row[0]))]
