@@ -20,7 +20,7 @@ The use of the files above to cluster cases is illustrated by example: the follo
 1. **`find California -type f | grep xml > case_list.txt`**
   * _Purpose/overview_: **[FINISH]**
   * _Detailed description_: **[FINISH]**
-  * _Running time_: **[FINISH]**
+  * _Running time_: 12s
 2. **`python sample.py case_list.txt 0.1 > case_list_sample.txt`**
   * _Purpose/overview_: **[FINISH]**
   * _Detailed description_: **[FINISH]**
