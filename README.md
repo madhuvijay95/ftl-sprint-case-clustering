@@ -5,8 +5,8 @@ Work on clustering court cases (in XML format), done for Jack Cushman's Free the
 Each `.py` file in this repository contains much more detailed documentation in comments, but more general descriptions of the purposes of the files are provided here.
 
 #### Core files
-- **`sample.py`**: **[FINISH]**
-- **`topics.py`**: **[FINISH]**
+- **`sample.py`**: Takes a list of cases and a decimal between 0 and 1 representing a proportion, and outputs a subsample of cases containing that proportion of the total case list.
+- **`topics.py`**: Trains and applies a clustering algorithm, and outputs a cluster assignment for each case, and lists of the most representative words and cases for each cluster.
 - **`output_JSON_new.py`**: **[FINISH]**
 
 #### Other general files
