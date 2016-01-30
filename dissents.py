@@ -25,10 +25,10 @@ ns = {'default' : 'http://www.loc.gov/METS/', 'xlink' : 'http://www.w3.org/1999/
 def has_dissent2(case_filename):
     return '<opinion type="dissent">' in open(case_filename, 'rb').read()
 
-def check_dissents2(case_file_list):
-    dissents = filter(has_dissent2, case_file_list)
-    for case in dissents:
-        print case
+#def check_dissents2(case_file_list):
+#    dissents = filter(has_dissent2, case_file_list)
+#    for case in dissents:
+#        print case
 
 start_time = time.time()
 with open(sys.argv[1], 'rb') as input_file:
