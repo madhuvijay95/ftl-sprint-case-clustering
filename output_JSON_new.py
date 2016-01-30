@@ -1,10 +1,31 @@
+#######################################################################################################################
+# Produces JSON output (which includes the number of cases, SC cases, cases with dissents, and SC cases with dissents,
+# for each cluster and each year), using cluster assignments from topics.py.
+#
+# This file takes 4 arguments:
+# (1) Name of a file name containing a list of the best words for each cluster, each on a separate line. (This should
+#     be the same file that was passed in as argument #5 to topics.py.)
+# (2) Name of a csv file containing the cluster assignments for the cases. (This should be the same file that was passed
+#     in as argument #4 to topics.py)
+# (3) Name of a json file to write the output to.
+# (4) (optional) Name of a file containing a list of the file name for every case that has a dissent. This is an
+#     optional argument: if this argument is provided, then this file will use the list of dissent cases to determine
+#     whether each case has a dissent; if the argument is omitted, then this file will check the text of each case to
+#     determine whether it has a disssent. (The latter takes much longer, so providing a file significantly reduces
+#     the running time.)
+# This file outputs a dictionary of the following form:
+#      {"0" : {"cluster-id" : 0, "cluster-words" : [list of words], "case-counts" : {"1850" : 1, "1851" : 2, ...},
+#              "dissent-counts" : {"1850" : 0, "1851" : 1, ...}, "SC-counts" : {"1850" : 1, "1851" : 0, ...}},
+#       "1" : {"cluster-id" : 1, ...}, ...}
+#######################################################################################################################
+
 import json
 import csv
 import numpy as np
 import sys
 from helpers import remove_quotes
-import itertools
-from collections import Counter
+#import itertools
+#from collections import Counter
 import copy
 
 best_words_filename = sys.argv[1]
