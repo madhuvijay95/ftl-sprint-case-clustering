@@ -1,6 +1,3 @@
-# ftl-sprint-case-clustering
-Work on clustering court cases (in XML format), done for Jack Cushman's Free the Law Wintersession Sprint in January 2016.
-
 ### Descriptions of files
 Each `.py` file in this repository contains much more detailed documentation in comments, but more general descriptions of the purposes of the files are provided here.
 
