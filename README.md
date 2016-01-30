@@ -17,7 +17,7 @@ Each `.py` file in this repository contains much more detailed documentation in 
 ### Instructions for case clustering
 The use of the files above to cluster cases is illustrated by example: the following sequence of Unix shell commands would take all cases in a subdirectory called California, cluster them into 100 clusters using `topics.py`, and produce JSON output using `output_JSON_new.py`. (All estimated times are based on a data set consisting of 126,418 cases from California.)
 
-1. **`find -type f California | grep xml > case_list.txt`**
+1. **`find California -type f | grep xml > case_list.txt`**
   * _Purpose/overview_: **[FINISH]**
   * _Detailed description_: **[FINISH]**
   * _Running time_: **[FINISH]**
