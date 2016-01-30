@@ -11,8 +11,9 @@
 # (4) (optional) Name of a file containing a list of the file name for every case that has a dissent. This is an
 #     optional argument: if this argument is provided, then this file will use the list of dissent cases to determine
 #     whether each case has a dissent; if the argument is omitted, then this file will check the text of each case to
-#     determine whether it has a disssent. (The latter takes much longer, so providing a file significantly reduces
-#     the running time.)
+#     determine whether it has a dissent. (The latter takes much longer, so providing a file significantly reduces
+#     the running time.) An appropriate input file for this can be generated using dissents.py, though that also takes
+#     a while to run.
 # This file outputs a dictionary of the following form:
 #      {"0" : {"cluster-id" : 0, "cluster-words" : [list of words], "case-counts" : {"1850" : 1, "1851" : 2, ...},
 #              "dissent-counts" : {"1850" : 0, "1851" : 1, ...}, "SC-counts" : {"1850" : 1, "1851" : 0, ...}},
