@@ -46,16 +46,18 @@
 import sys
 import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
-import xml.etree.ElementTree as ET
-from helpers import body, text_iter, year, remove_quotes
+#import xml.etree.ElementTree as ET
+from helpers import remove_quotes, get_text, get_data
 from sklearn.decomposition import NMF
 import bottleneck as bn
 import csv
+import time
 
-#start_time = time.time()
-#print 'Time at start: %.3f' % (time.time() - start_time)
-#sys.stdout.flush()
+start_time = time.time()
+print 'Time at start: %.3f' % (time.time() - start_time)
+sys.stdout.flush()
 
+# read parameters from sys.argv
 n_clusters = int(sys.argv[1])
 train_filename = sys.argv[2]
 test_filename = sys.argv[3] if len(sys.argv) > 3 else train_filename
@@ -65,22 +67,13 @@ best_match_cases_filename = sys.argv[6] if len(sys.argv) > 6 else None
 W_output_filename = sys.argv[7] if len(sys.argv) > 7 else None
 H_output_filename = sys.argv[8] if len(sys.argv) > 8 else None
 
+# read in list of casese in training data
 with open(train_filename, 'rb') as input_file:
     train_case_list = list(input_file)
     train_case_list = map(lambda s : s.replace('\n','').replace('\r',''), train_case_list)
     train_case_list = map(remove_quotes, train_case_list)
 #print 'Time after reading case list: %.3f' % (time.time() - start_time)
 #sys.stdout.flush()
-
-def get_text(filename):
-    tree = ET.parse(filename)
-    root = tree.getroot()
-    return text_iter(body(root)).replace(u'\xad','')
-
-def get_data(filename):
-    tree = ET.parse(filename)
-    root = tree.getroot()
-    return filename, year(root), text_iter(body(root))
 
 train_texts = map(get_text, train_case_list)
 #print 'Time after getting train text from XML: %.3f' % (time.time() - start_time)
@@ -110,6 +103,13 @@ for i in range(len(best_indices)):
     best_indices[i].sort(key = lambda j : -H[i,j])
 best_words = [[vocab_rev[i] for i in lst] for lst in best_indices]
 
+if H_output_filename is not None:
+    with open(H_output_filename, 'wb') as output_file:
+        writer = csv.writer(output_file)
+        writer.writerow(tuple([vocab_rev[i].encode('utf-8') for i in range(len(vocab_rev.keys()))]))
+        for row in H:
+            writer.writerow(tuple(row))
+
 #print 'Time after NMF fit: %.3f\n' % (time.time() - start_time)
 #sys.stdout.flush()
 
@@ -120,10 +120,10 @@ best_words = [[vocab_rev[i] for i in lst] for lst in best_indices]
 if best_words_filename is not None:
     with open(best_words_filename, 'wb') as best_words_file:
         for c, lst in enumerate(best_words):
-            best_words_file.write(int(c) + ' [' + ', '.join(map(lambda s : '\'' + s + '\'', lst)) + ']\n')
+            best_words_file.write(str(c) + ' [' + ', '.join(map(lambda s : '\'' + s + '\'', lst)) + ']\n')
 
-#print '\nTime after NMF output: %.3f' % (time.time() - start_time)
-#sys.stdout.flush()
+print '\nTime after NMF output: %.3f' % (time.time() - start_time)
+sys.stdout.flush()
 
 with open(test_filename, 'rb') as input_file:
     test_case_list = list(input_file)
@@ -161,13 +161,6 @@ if W_output_filename is not None:
         writer = csv.writer(output_file)
         for row, (f,y,t) in zip(test_W, test_data):
             writer.writerow((f,) + tuple(row))
-
-if H_output_filename is not None:
-    with open(H_output_filename, 'wb') as output_file:
-        writer = csv.writer(output_file)
-        writer.writerow(tuple([vocab_rev[i].encode('utf-8') for i in range(len(vocab_rev.keys()))]))
-        for row in H:
-            writer.writerow(tuple(row))
 
 #print '\nTime after all remaining output: %.3f\n' % (time.time() - start_time)
 

@@ -4,6 +4,8 @@
 # for a case.
 #######################################################################################################################
 
+import xml.etree.ElementTree as ET
+
 # Namespace used for parsing the XML files.
 ns = {'default' : 'http://www.loc.gov/METS/', 'xlink' : 'http://www.w3.org/1999/xlink',
       'casebody' : 'http://nrs.harvard.edu/urn-3:HLS.Libr.US_Case_Law.Schema.Case_Body:v1',
@@ -39,3 +41,13 @@ def remove_quotes(filename):
         return filename[1:(len(filename)-1)]
     else:
         return filename
+
+def get_text(filename):
+    tree = ET.parse(filename)
+    root = tree.getroot()
+    return text_iter(body(root)).replace(u'\xad','')
+
+def get_data(filename):
+    tree = ET.parse(filename)
+    root = tree.getroot()
+    return filename, year(root), text_iter(body(root))
