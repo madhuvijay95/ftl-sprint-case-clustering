@@ -25,7 +25,7 @@ The use of the files above to cluster cases is illustrated by example: the follo
 3. **`python topics.py 100 case_list_sample.txt case_list.txt clusters.csv best_words.txt best_cases.txt`**
   * _Purpose/overview_: Trains a clustering algorithm on the subsample in `case_list_sample.txt` to produce 100 clusters, and runs that algorithm on the entire data set in `case_list.txt`. Outputs cluster assignments (1 case per line) into `clusters.csv`, and outputs the best words and best-match cases for each cluster into `best_words.txt` and `best_cases.txt`, respectively.
   * _Description_: Uses an [NMF](https://en.wikipedia.org/wiki/Non-negative_matrix_factorization) algorithm for clustering cases. Implementation details (and more specific details about input arguments) are provided in `topics.py`. Currently, `topics.py` outputs the 50 best words and 20 best cases for each cluster; however, these parameters are easy to change. Beware if running on a personal computer, as the clustering algorithm takes up close to 5 GB of RAM and runs for hours. **[FINISH / CHECK OVER]**
-  * _Running time_: **[FINISH]**
+  * _Running time_: 130m13s
 4. **`python dissents.py case_list.txt case_list_dissents.txt`**
   * _Purpose/overview_: Examines each case in `case_list.txt` to check whether it has a dissenting opinion. Outputs a list of all cases that have dissenting opinions to `case_list_dissents.txt`.
   * _Description_: Checks whether each case has a dissenting opinion by looking for the string '<opinion type="dissent">' in the XML file.
