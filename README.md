@@ -9,6 +9,7 @@ Each `.py` file in this repository contains much more detailed documentation in 
 #### Other general files
 - [**`files_to_data.py`**](files_to_data.py): Retrieves and outputs various data (case name, court name, year, and docket number) for a given list of case XML files.
 - [**`dissents.py`**](dissents.py): Takes a list of cases, checks whether each one has a dissenting opinion, and outputs a list of the subset of cases that contain dissenting opinions.
+- [**`extract_cluster.py`**](extract_cluster.py): Extracts and outputs all cases from some specified cluster from the csv output of `topics.py`.
 - [**`helpers.py`**](helpers.py): Contains various functions that are used by the other files, especially for parsing the XML files of cases. (This file is just a centralized set of helper functions, and is not meant to be used by users.)
 
 ### Instructions for case clustering
@@ -39,3 +40,4 @@ The use of the files above to cluster cases is illustrated by example: the follo
 #### Other potentially useful commands
 
 1. **`python files_to_data.py case_list.txt case_data.csv`**: Outputs a csv `case_data.csv`, which contains the file name, case name, court name, year, and docket number corresponding to each case in `case_list.txt`. _Running time_ (for all California cases): 47m24s.
+2. **`python extract_cluster.py clusters.csv 42`**: Finds all cases from `clusters.csv` (which is outputted by `topics.py` in command #5 above) that are in cluster 42, and writes a list of file names of those cases to standard output. _Running time_: 0.4s.
