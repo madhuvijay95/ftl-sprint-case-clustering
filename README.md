@@ -1,5 +1,5 @@
 ### Descriptions of files
-Each `.py` file in this repository contains much more detailed documentation in comments, but more general descriptions of the purposes of the files are provided here.
+Each `.py` file in this repository contains much more detailed documentation in comments, but general descriptions of the purposes of the files are provided here.
 
 #### Core files
 - [**`sample.py`**](sample.py): Takes a list of cases and a decimal between 0 and 1 representing a proportion, and outputs a random subsample of cases containing that proportion of the total case list.
@@ -8,7 +8,7 @@ Each `.py` file in this repository contains much more detailed documentation in 
 
 #### Other general files
 - [**`files_to_data.py`**](files_to_data.py): Retrieves and outputs various data (case name, court name, year, and docket number) for a given list of case XML files.
-- [**`dissents.py`**](dissents.py): Takes a list of cases, checks whether each one has a dissenting opinion, and outputs a list of the subset of cases that have dissents in them.
+- [**`dissents.py`**](dissents.py): Takes a list of cases, checks whether each one has a dissenting opinion, and outputs a list of the subset of cases that contain dissenting opinions.
 - [**`helpers.py`**](helpers.py): Contains various functions that are used by the other files, especially for parsing the XML files of cases. (This file is just a centralized set of helper functions, and is not meant to be used by users.)
 
 ### Instructions for case clustering
