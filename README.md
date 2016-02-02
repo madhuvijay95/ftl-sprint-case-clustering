@@ -30,7 +30,7 @@ The use of the files above to cluster cases is illustrated by example: the follo
 4. **`python dissents.py case_list.txt case_list_dissents.txt`**
   * _Purpose/overview_: Examines each case in `case_list.txt` to check whether it has a dissenting opinion. Outputs a list of all cases that have dissenting opinions to `case_list_dissents.txt`.
   * _Description_: Checks whether each case has a dissenting opinion by looking for the string '<opinion type="dissent">' in the XML file.
-  * _Running time_: 22m2s
+  * _Running time_: 28m2s
 5. **`python output_JSON_new.py best_words.txt clusters.csv output.json case_list_dissents.txt`**
   * _Purpose/overview_: Output a JSON file `output.json` containing data on the number of cases (as well as Supreme Court cases and cases with dissenting opinions, in particular) for each cluster in each year.
   * _Description_: Outputs a JSON that contains (for each cluster): the best-match words, the number of cases by year, the number of Supreme Court cases by year, the number of cases with dissenting opinions by year, and the number of SC cases with dissenting opinions by year. Uses `best_words.txt` for the lists of best words, `clusters.csv` for cluster assignments and counts, and `case_list_dissents.txt` (an optional argument that significantly improves the running time) for a list of cases with dissenting opinions.
